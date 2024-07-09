@@ -1,0 +1,27 @@
+{
+  "name": "crud-task-api",
+  "version": "1.0.0",
+  "description": "crud-task-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hemanth-888/crud-task-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hemanth-888/crud-task-api.git/crud-task-api/issues"
+  },
+  "homepage": "https://github.com/Hemanth-888/crud-task-api/blob/develop/README.md",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
