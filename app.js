@@ -48,13 +48,37 @@ Task-create,update,ReadTaskByid,ReadAllTask
 //http://localhost:3000/tasklists =>[{TaskList},{TaskList}]
 app.get('/TaskList',(req,res)=>{
    TaskList.find({})//tasklist do not have any data now so it shows empty array in localhost server
-   .then((lists)=>{res.send(lists)})//so were sending response back in json format
+   .then((lists)=>{
+    res.status(200).send(lists);
+    
+   })//so were sending response back in json format
    .catch((error)=>{
-    console.log(error)
+    console.log(error);
+    res.status(500);
 
    }
    );
 });
+
+//Roue or endpoint for creating  a Tasklist
+app.post('/TaskList',(req,res)=>{
+   // console.log("hello i am inside post method");
+   console.log(req.body);
+
+   let taskListObj={'title':req.body.title};//create item shopping list and grocerry lista we can save them and we can GET them by postman
+   TaskList(taskListObj).save()
+   .then((lists)=>{
+    res.status(201).send(lists);
+    
+   })
+   .catch((error)=>{
+    console.log(error);
+    res.status(500);
+
+   }
+   );
+
+})
 //https://www.restapitutorial.com/introduction/httpmethods
 app.listen(3000,()=>{
     console.log("hello express server 3000 great work pal");
