@@ -46,7 +46,7 @@ Task-create,update,ReadTaskByid,ReadAllTask
 //Routes for API endopoints for tasklist model
 //get all task Lists
 //http://localhost:3000/tasklists =>[{TaskList},{TaskList}]
-app.get('/TaskList',(req,res)=>{
+app.get('/TaskList',(req,res)=>{//create taskList
    TaskList.find({})//tasklist do not have any data now so it shows empty array in localhost server
    .then((lists)=>{
     res.status(200).send(lists);
@@ -60,7 +60,18 @@ app.get('/TaskList',(req,res)=>{
    );
 });
 
-//Roue or endpoint for creating  a Tasklist
+//Endpoint to get one tasklistId:https://localhost:3000/TaskList/668e65259c56b33345b89746(booklist id)
+app.get(//Tasklist get-Update for one tasklist
+    '/TaskList/:TaskListId',(req,res)=>{
+        let TaskListId=req.params.TaskListId;
+        TaskList.find({_id:TaskListId})
+        .then((TaskList)=>{// it fetches id of particular object and get data by tasklist parameter.
+            res.status(200).send(TaskList)
+        })
+        .catch((error)=>{console.log(error)});
+    }
+);
+//Route or endpoint for creating  a Tasklist
 app.post('/TaskList',(req,res)=>{
    // console.log("hello i am inside post method");
    console.log(req.body);
@@ -79,6 +90,37 @@ app.post('/TaskList',(req,res)=>{
    );
 
 })
+
+//for updating tasklist below code refer
+//if u want to update only one of the tasklist use app.patch for updating or replacing all use app.put
+
+app.put('/TaskList/:TaskListId',(req,res)=>{
+    TaskList.findOneAndUpdate({_id:req.params.TaskListId},{ $set: req.body})
+    .then((TaskList)=>{// were doing a full update to single tasklist
+        res.status(200).send(TaskList)//PUT is full update of object
+    })//in postman we update book list title to book list updated.
+    .catch((error)=>{console.log(error)});
+
+});
+//PATCH is partial update of one field
+app.patch('/TaskList/:TaskListId',(req,res)=>{
+    TaskList.findOneAndUpdate({_id:req.params.TaskListId},{ $set: req.body})
+    .then((TaskList)=>{// were doing a full update to single tasklist
+        res.status(200).send(TaskList)
+    })
+    .catch((error)=>{console.log(error)});
+
+});
+
+//delete a task list by id
+app.delete('/TaskList/:TaskListId',(req,res)=>{
+    TaskList.findByIdAndDelete(req.params.TaskListId)//if we write findByIdAnd UPdate we write id before req.params
+    .then((TaskList)=>{// were doing a full update to single tasklist
+        res.status(201).send(TaskList)
+    })
+    .catch((error)=>{console.log(error)});
+
+});
 //https://www.restapitutorial.com/introduction/httpmethods
 app.listen(3000,()=>{
     console.log("hello express server 3000 great work pal");
